@@ -23,13 +23,39 @@ GPL alive by issuing this with the same license!
 
 Modified by Olivier Scherler.  (http://olivier.ithink.ch/).  I’m showing I understand
 the GPL by knowing I’m required to distribute this under the same license. ;-)
+
+Modified by Robert Neumann. Modifications are documented in the git repository.
+(https://github.com/r0b2g1t/OBS-File-Browser)
 -->
 <meta charset="utf-8">
 <title>Loading...</title>
-<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
-<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+<link rel="icon" href="/images/favicon.ico" type="image/x-icon">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 <style>
+@font-face {
+	font-family: TeleGroteskScreen;
+	src: url(https://otc-images.obs.eu-de.otc.t-systems.com/fonts/telegroteskscreen-bold.woff);
+}
+@font-face {
+	font-family: TeleGrotesk;
+	src: url(https://otc-images.obs.eu-de.otc.t-systems.com/fonts/telegroteskscreen-regular.woff);
+}
+
+html, body {
+	font-family: TeleGrotesk;
+}
+html {
+	position: relative;
+	min-height: 100%;
+}
+#h2-title {
+	font-family: TeleGroteskScreen;
+}
+body {
+	font-size: 16px;
+	margin-bottom: 60px;
+}
 .hide-while-loading {
 	display: none;
 }
@@ -42,6 +68,63 @@ the GPL by knowing I’m required to distribute this under the same license. ;-)
 .folder-name {
 	cursor: pointer;
 }
+.loading img {
+	position: absolute;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+.brandbar {
+    min-height: 80px;
+    background-color: #e20074;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+.brandbar .brand-logo {
+    margin-top: 24px;
+    float: left;
+}
+.brandbar .brand-claim {
+    margin-top: 38px;
+    float: right;
+    display: block;
+}
+.brand-footer {
+  background-color: #262626;
+  color: #fff;
+  line-height: 16px;
+  padding: 0 12px;
+	min-height: 80px;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+}
+.brand-logo {
+	position: relative;
+	float: left;
+	padding-left: 12px;
+  padding-right: 12px;
+	display: block;
+	margin-top: -12px;
+}
+.row {
+	margin: 38px 0 0 0;
+}
+.footer-nav a:hover {
+	border-bottom: 1px solid #918984;
+}
+.footer-nav a {
+	color: #918984 !important;
+	margin-left: 12px;
+	margin-right: 12px;
+	text-decoration: none;
+}
+.text-center {
+	position: relative;
+	left: -40px;
+}
 </style>
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
@@ -52,8 +135,23 @@ the GPL by knowing I’m required to distribute this under the same license. ;-)
 </head>
 <body>
 
+<header class="brand-header force-unfixed">
+  <div class="brandbar">
+    <div class="container">
+      <div class="brand-logo">
+        <img src="https://otc-images.obs.eu-de.otc.t-systems.com/images/deutsche-telekom-logo.svg" alt="Telekom Logo">
+        <span class="sr-only">Telekom Logo</span>
+      </div>
+      <div class="brand-claim">
+        <img src="https://otc-images.obs.eu-de.otc.t-systems.com/images/brand-claim.svg" alt="Brand Claim">
+        <span class="sr-only">Brand Claim</span>
+      </div>
+    </div>
+  </div>
+</header>
+
 <div class="container">
-	<h1 id="h1-title">Loading...</h1>
+  <h2 id="h2-title" class="title"></h2>
 	<table class="hide-while-loading table table-striped">
 		<thead>
 			<tr>
@@ -66,7 +164,28 @@ the GPL by knowing I’m required to distribute this under the same license. ;-)
 		<tbody id="tbody-content">
 		</tbody>
 	</table>
+  <div class="loading">
+    <img id="load-image" src="https://otc-images.obs.eu-de.otc.t-systems.com/images/load.gif">
+  </div>
 </div>
+
+<footer class="brand-footer">
+  <div class="container">
+    <div class="row">
+    <div class="brand-logo">
+      <a href="#">
+        <img src="https://otc-images.obs.eu-de.otc.t-systems.com/images/deutsche-telekom-logo.svg" alt="Telekom Logo">
+        <span class="sr-only">Telekom Logo</span>
+      </a>
+    </div>
+    <div class="footer-nav center-block text-center">
+      <a href="https://cloud.telekom.de/en/imprint/">Imprint</a>
+      <a href="https://cloud.telekom.de/en/contact/">Contact</a>
+      <a href="https://cloud.telekom.de/fileadmin/CMS/Information/TelekomCLOUD-Data-Privacy-Information.pdf">Privacy Statement</a>
+    </div>
+    </div>
+  </div>
+</footer>
 
 <script id="file-or-folder" type="text/x-handlebars-template">
 	<tr data-folder="{{ folderName }}">
@@ -101,10 +220,8 @@ the GPL by knowing I’m required to distribute this under the same license. ;-)
 	var GB = 1024 * 1024 * 1024;
 
 	// replace last /index.html to get bucket root
-	var bucketUrl = document.location.href.replace( /\/[^\/]+$/, '' );
-	
-	// TODO: Convert from s3-website URL to s3 URL automatically
-	bucketUrl = "http://builds.openfl.org.s3-us-east-2.amazonaws.com";
+	var bucketUrl = "https://<BUCKET_NAME>.obs.eu-de.otc.t-systems.com";
+
 	var compiledTemplate;
 	var createdFolders = [];
 
@@ -125,7 +242,7 @@ the GPL by knowing I’m required to distribute this under the same license. ;-)
 	}
 
 	// POJO describing a file or a folder
-	function FileOrFolder( lastModified, etag, size, key )
+	function FileOrFolder( lastModified, etag, size, key, filter)
 	{
 		var self = this;
 
@@ -133,6 +250,14 @@ the GPL by knowing I’m required to distribute this under the same license. ;-)
 		self.etag = etag;
 		self.size = size;
 		self.key = key;
+		self.filter = filter;
+
+		// Filter for image os
+    var parameters = location.search.substring(1).split("=");
+
+		if (unescape(parameters[0]) == ("os")) {
+			var filter = unescape(parameters[1]);
+		}
 
 		// init logic
 		self.isFolder = FOLDER_PATTERN.test( self.key );
@@ -148,10 +273,20 @@ the GPL by knowing I’m required to distribute this under the same license. ;-)
 		self.friendlySize = toFriendlySize( parseInt( self.size, 10 ) );
 		self.type = self.isFolder ? 'Folder' : ( extension != self.filename ? ( extension.toUpperCase() + ' file' ) : 'Unknown' );
 		self.friendlyLastModified = lastModified != "" ? moment( lastModified ).format( DATE_FORMAT ) : "";
-		
+
 		// TODO: Make easier to configure?
-		if (self.level == 1) {
-			if (self.filename == "index.html" || self.filename == "favicon.ico") {
+    //if (self.level == 1) {
+		if (self.filename == "index.html" || self.filename == "favicon.ico" || self.filename.includes(".js") || self.folderName == "images" || self.folderName == "fonts") {
+			self.hidden = true;
+		}
+
+		// Hide folders and filtered images
+		if (!self.filename.toLowerCase().includes(filter) && filter || self.isFolder == true){
+
+			// combines suse and sles images by name
+			if (filter != "suse"){
+				self.hidden = true;
+		  } else if (!self.filename.toLowerCase().includes("sles")) {
 				self.hidden = true;
 			}
 		}
@@ -197,10 +332,51 @@ the GPL by knowing I’m required to distribute this under the same license. ;-)
 	{
 		var listBucketResult = $(xml).find('ListBucketResult');
 
+
+		// Filter for image os
+		var parameters = location.search.substring(1).split("=");
+
+		if (unescape(parameters[0]) == ("os")) {
+			var filter = unescape(parameters[1]);
+		}
+
+		switch(filter){
+			case "centos":
+				var os = "CentOS";
+				break;
+			case "coreos":
+				var os = "CoreOS";
+				break;
+			case "debian":
+				var os = "Debian";
+				break;
+			case "euleros":
+				var os = "EulerOS";
+				break;
+			case "fedora":
+				var os = "Fedora";
+				break;
+			case "oel":
+				var os = "Oracle Enterprise Linux";
+				break;
+			case "rhel":
+				var os = "RedHat";
+				break;
+			case "suse":
+				var os = "SUSE";
+				break;
+			case "ubuntu":
+				var os = "Ubuntu";
+				break;
+			default:
+				var os = "Open Telekom Cloud";
+		}
+
 		// set a reasonable title instead of "Bucket loading"
-		var title = 'Index of "' + listBucketResult.find('Name').text() + '"';
+		var title = 'Index of "' + os + '" Images';
 		document.title = title;
-		$('#h1-title').text( title );
+    $('#h2-title').text( title );
+		$('#load-image').hide();
 
 		var $tbodyContent = $('#tbody-content');
 		var truncated = listBucketResult.find('IsTruncated').text() == 'true';
@@ -217,9 +393,10 @@ the GPL by knowing I’m required to distribute this under the same license. ;-)
 				$element.find('LastModified').text(),
 				$element.find('ETag').text(),
 				$element.find('Size').text(),
-				name
+				name,
+				filter
 			);
-			
+
 			if (!fileOrFolder.hidden) {
 				// crude method to force addition of folders
 				var folderName = fileOrFolder.folderName;
@@ -228,7 +405,7 @@ the GPL by knowing I’m required to distribute this under the same license. ;-)
 					// TODO: Handle last modified date
 					filesOrFolders.push (new FileOrFolder("", "", "", folderName + "/"));
 				}
-				
+
 				filesOrFolders.push( fileOrFolder );
 			}
 		} );
@@ -282,7 +459,7 @@ the GPL by knowing I’m required to distribute this under the same license. ;-)
 			success: function( xhr ) { onAjaxSuccess( xhr, filesOrFolders, marker ); }
 		} );
 	}
-	
+
 	getBucket( null, [] );
 
 	// compile while ajax is in progress
