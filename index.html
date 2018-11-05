@@ -276,7 +276,13 @@ body {
 
 		// TODO: Make easier to configure?
     //if (self.level == 1) {
-		if (self.filename == "index.html" || self.filename == "favicon.ico" || self.filename.includes(".js") || self.folderName == "images" || self.folderName == "fonts") {
+		if (
+			self.filename == "index.html" ||
+			self.filename == "favicon.ico" ||
+			self.filename.includes(".js") ||
+			self.folderName == "images" ||
+			self.folderName == "fonts"
+			) {
 			self.hidden = true;
 		}
 
@@ -379,7 +385,6 @@ body {
 		var title = 'Index of "' + os + '" Images';
 		document.title = title;
     $('#h2-title').text( title );
-		$('#load-image').hide();
 
 		var $tbodyContent = $('#tbody-content');
 		var truncated = listBucketResult.find('IsTruncated').text() == 'true';
@@ -450,7 +455,8 @@ body {
 			} );
 
 			updateFolders( false );
-
+			
+			$('#load-image').hide();
 			$('.hide-while-loading').show();
 		}
 	}
