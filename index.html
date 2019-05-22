@@ -338,53 +338,60 @@ body {
 	{
 		var listBucketResult = $(xml).find('ListBucketResult');
 
-
 		// Filter for image os
 		var parameters = location.search.substring(1).split("=");
 
 		if (unescape(parameters[0]) == ("os")) {
 			var filter = unescape(parameters[1]);
+
+
+			switch(filter){
+				case "centos":
+					var os = "CentOS";
+					break;
+				case "coreos":
+					var os = "CoreOS";
+					break;
+				case "debian":
+					var os = "Debian";
+					break;
+				case "euleros":
+					var os = "EulerOS";
+					break;
+				case "fedora":
+					var os = "Fedora";
+					break;
+				case "kali":
+					var os = "Kali Linux";
+					break;
+				case "oel":
+					var os = "Oracle Enterprise Linux";
+					break;
+				case "rhel":
+					var os = "RedHat";
+					break;
+				case "suse":
+					var os = "SUSE";
+					break;
+				case "ubuntu":
+					var os = "Ubuntu";
+					break;
+				default:
+					var os = "Open Telekom Cloud";
+			}
+
+			// set a reasonable title instead of "Bucket loading"
+			var title = 'Index of "' + os + '" Images';
+
+		}
+		else {
+			// set bucket name as title
+			var name = listBucketResult.find('Name').text();
+			var title = 'Index of "' + name + '"';
 		}
 
-		switch(filter){
-			case "centos":
-				var os = "CentOS";
-				break;
-			case "coreos":
-				var os = "CoreOS";
-				break;
-			case "debian":
-				var os = "Debian";
-				break;
-			case "euleros":
-				var os = "EulerOS";
-				break;
-			case "fedora":
-				var os = "Fedora";
-				break;
-			case "kali":
-				var os = "Kali Linux";
-				break;
-			case "oel":
-				var os = "Oracle Enterprise Linux";
-				break;
-			case "rhel":
-				var os = "RedHat";
-				break;
-			case "suse":
-				var os = "SUSE";
-				break;
-			case "ubuntu":
-				var os = "Ubuntu";
-				break;
-			default:
-				var os = "Open Telekom Cloud";
-		}
-
-		// set a reasonable title instead of "Bucket loading"
-		var title = 'Index of "' + os + '" Images';
 		document.title = title;
-    $('#h2-title').text( title );
+		$('#h2-title').text( title );
 
 		var $tbodyContent = $('#tbody-content');
 		var truncated = listBucketResult.find('IsTruncated').text() == 'true';
