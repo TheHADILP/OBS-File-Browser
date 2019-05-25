@@ -323,7 +323,6 @@ body {
 
 	function updateFolder( $folder, state )
 	{
-		var state = null;
 		var attr = $folder.data('folder-toggle');
 		var $icon = $folder.find('.i-expand-collapse').first();
 		if( state === null ) {
@@ -460,7 +459,7 @@ body {
 			renderContents( $tbodyContent, folders['__ROOT__'], compiledTemplate, folders );
 
 			$('.folder-name').click( function() {
-				updateFolder( $(this) );
+				updateFolder( $(this), null );
 			} );
 
 			updateFolders( false );
