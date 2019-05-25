@@ -31,7 +31,8 @@ Modified by Robert Neumann. Modifications are documented in the git repository.
 <title>Loading...</title>
 <link rel="shortcut icon" href="https://otc-image-files.obs.eu-de.otc.t-systems.com/images/favicon.ico" type="image/x-icon">
 <link rel="icon" href="https://otc-image-files.obs.eu-de.otc.t-systems.com/images/favicon.ico" type="image/x-icon">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 <style>
 @font-face {
 	font-family: TeleGroteskScreen;
@@ -123,14 +124,14 @@ body {
 }
 .text-center {
 	position: relative;
-	left: -40px;
+	left: 40px;
 }
 </style>
 
-<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.2/handlebars.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.4.0/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
 </head>
 <body>
@@ -191,13 +192,13 @@ body {
 	<tr data-folder="{{ folderName }}">
 		{{#if isFolder}}
 			<td class="folder-name" data-folder-toggle="{{filename}}">
-				<i class="glyphicon glyphicon-chevron-down i-expand-collapse" style="margin-left: calc( ( {{level}} - 1) * 16px );"></i>
-				<i class="glyphicon glyphicon-folder-open i-file-or-folder" style="margin-left: 4px;"></i>
+				<i class="fas fa-chevron-down i-expand-collapse" style="margin-left: calc( ( {{level}} - 1) * 16px );"></i>
+				<i class="fas fa-folder-open i-file-or-folder" style="margin-left: 4px;"></i>
 				{{simpleFilename}}
 			</td>
 		{{else}}
 			<td>
-				<i class="glyphicon glyphicon-file i-file-or-folder" style="margin-left: calc( ( {{level}} * 16px ) + 4px );"></i>
+				<i class="fas fa-file i-file-or-folder" style="margin-left: calc( ( {{level}} * 16px ) + 4px );"></i>
 				<a href="{{url}}">{{simpleFilename}}</a>
 			</td>
 		{{/if}}
@@ -322,6 +323,7 @@ body {
 
 	function updateFolder( $folder, state )
 	{
+		var state = null;
 		var attr = $folder.data('folder-toggle');
 		var $icon = $folder.find('.i-expand-collapse').first();
 		if( state === null ) {
@@ -330,8 +332,8 @@ body {
 
 		$( '[ data-folder="' + attr + '" ]' ).toggle( state );
 		$icon
-			.toggleClass( 'glyphicon-chevron-down', state )
-			.toggleClass( 'glyphicon-chevron-right', ! state );
+			.toggleClass( 'fa-chevron-down', state )
+			.toggleClass( 'fa-chevron-right', ! state );
 	}
 
 	function onAjaxSuccess( xml, filesOrFolders, marker )
