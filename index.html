@@ -126,6 +126,9 @@ body {
 	position: relative;
 	left: 40px;
 }
+.borderless th {
+	border:0;
+}
 </style>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -153,7 +156,7 @@ body {
 
 <div class="container">
   <h2 id="h2-title" class="title"></h2>
-	<table class="hide-while-loading table table-striped">
+	<table class="hide-while-loading table table-striped table-hover borderless">
 		<thead>
 			<tr>
 				<th>Name</th>
