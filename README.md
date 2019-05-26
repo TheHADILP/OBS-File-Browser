@@ -69,6 +69,8 @@ Changes
   - Handlebars 4.1.2
   - Moment 2.24.0
 - Switch to Fontawesome icons (Glyphicons are deprecated)
+- Increase bottom margin to avoid overlapping content and footer
+- Rework header and footer implementation 
 - Minor layout fixes and tweaking
 
 
