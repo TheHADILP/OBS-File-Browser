@@ -60,6 +60,17 @@ Changes
 - Set Telekom template
 - Edit README for Open Telekom Cloud
 
+### Sebastian Haderecker
+- Update brand resource URLs for Open Telekom Cloud
+- Display bucket name if no OS images are found
+- Update dependencies:
+  - Bootstrap 4.3.1
+  - jQuery 3.4.1
+  - Handlebars 4.1.2
+  - Moment 2.24.0
+- Switch to Fontawesome icons (Glyphicons are deprecated)
+- Minor layout fixes and tweaking
+
 
 [1]: https://nolanlawson.s3.amazonaws.com/index.html
 [2]: https://aws.amazon.com/code/1713
