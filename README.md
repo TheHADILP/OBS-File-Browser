@@ -70,9 +70,9 @@ Changes
   - Moment 2.24.0
 - Switch to Fontawesome icons (Glyphicons are deprecated)
 - Increase bottom margin to avoid overlapping content and footer
-- Rework header and footer implementation 
+- Rework header and footer implementation
+- Open footer links in new tab
 - Minor layout fixes and tweaking
-
 
 [1]: https://nolanlawson.s3.amazonaws.com/index.html
 [2]: https://aws.amazon.com/code/1713
